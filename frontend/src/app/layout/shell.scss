@@ -1,0 +1,141 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.shell {
+  height: 100%;
+}
+
+.sidenav {
+  width: 268px;
+
+  ::ng-deep .mat-drawer-inner-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 20px 16px;
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+
+      mat-icon {
+        font-size: 22px;
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    .name {
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      color: var(--aum-ink);
+    }
+    .company {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mat-sys-on-surface-variant);
+    }
+  }
+
+  .nav-links {
+    flex: 1;
+    padding-top: 4px;
+
+    a[mat-list-item] {
+      border-radius: 12px;
+      margin: 2px 10px;
+    }
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-top: 1px solid var(--mat-sys-outline-variant);
+
+    .identity {
+      flex: 1;
+      min-width: 0;
+
+      .name {
+        font-weight: 700;
+        font-size: 13.5px;
+        color: var(--aum-ink);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .role {
+        font-size: 12px;
+        color: var(--mat-sys-on-surface-variant);
+      }
+    }
+  }
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 56px;
+  padding: 0 18px;
+
+  .spacer {
+    flex: 1;
+  }
+
+  .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--mat-sys-surface-container-high);
+    color: var(--aum-ink);
+    font-weight: 800;
+    font-size: 13px;
+  }
+}
+
+.menu-header {
+  padding: 10px 16px;
+
+  .menu-name {
+    font-weight: 700;
+    font-size: 13.5px;
+  }
+  .menu-role {
+    font-size: 12px;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.content {
+  padding: 10px 28px 36px;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 960px) {
+  .content {
+    padding: 8px 16px 28px;
+  }
+}

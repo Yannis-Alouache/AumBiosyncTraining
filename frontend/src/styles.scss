@@ -1,0 +1,84 @@
+// Material 3 theme of the OpsReady console: cyan palette (health & rescue
+// identity), Manrope typography, light scheme locked (internal tool, no dark
+// mode). CSS class names are English; user-facing text stays French.
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$cyan-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Manrope,
+      density: 0,
+    )
+  );
+}
+
+:root {
+  // Domain tokens shared by every component.
+  --aum-background: #f2f6f7;
+  --aum-ink: #12262b;
+  --aum-night: #10333d;
+
+  --aum-critical: #b3261e;
+  --aum-critical-bg: #fceceb;
+  --aum-warning: #925c06;
+  --aum-warning-bg: #fdf1dc;
+  --aum-ok: #166534;
+  --aum-ok-bg: #e5f3ea;
+  --aum-info: #0f4c5c;
+  --aum-info-bg: #e3f0f4;
+}
+
+body {
+  color-scheme: light;
+  margin: 0;
+  height: 100%;
+  background-color: var(--aum-background);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+}
+
+// Numeric values: monospace font for data readability.
+.num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+// Status badges shared by agents and alerts.
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+
+  &.critical { background: var(--aum-critical-bg); color: var(--aum-critical); }
+  &.warning { background: var(--aum-warning-bg); color: var(--aum-warning); }
+  &.ok { background: var(--aum-ok-bg); color: var(--aum-ok); }
+  &.info { background: var(--aum-info-bg); color: var(--aum-info); }
+  &.neutral { background: var(--mat-sys-surface-container-high); color: var(--mat-sys-on-surface-variant); }
+}
+
+// Standard page title (every route renders the same pattern).
+.page-title {
+  h1 {
+    margin: 0;
+    font: var(--mat-sys-headline-small);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--aum-ink);
+  }
+  p {
+    margin: 4px 0 0;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}

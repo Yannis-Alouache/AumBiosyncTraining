@@ -1,0 +1,117 @@
+<div class="page-header">
+  <div class="page-title">
+    <h1>Agents</h1>
+    <p>{{ total() }} agents suivis par les capteurs Orbe</p>
+  </div>
+</div>
+
+<div class="filters">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Rechercher un agent</mat-label>
+    <mat-icon matTextPrefix>search</mat-icon>
+    <input
+      matInput
+      type="text"
+      placeholder="Nom, prénom ou email"
+      [value]="search"
+      (input)="onSearch($any($event.target).value)"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Site</mat-label>
+    <mat-select [value]="siteId" (selectionChange)="siteId = $event.value; onFilterChange()">
+      <mat-option [value]="null">Tous les sites</mat-option>
+      @for (site of sites(); track site.id) {
+        <mat-option [value]="site.id">{{ site.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Statut</mat-label>
+    <mat-select [value]="statusFilter" (selectionChange)="statusFilter = $event.value; onFilterChange()">
+      <mat-option [value]="null">Tous</mat-option>
+      @for (s of statuses; track s) {
+        <mat-option [value]="s">{{ statusLabel(s) }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  @if (hasActiveFilters) {
+    <button mat-button (click)="resetFilters()">
+      <mat-icon>filter_alt_off</mat-icon>
+      Réinitialiser
+    </button>
+  }
+</div>
+
+<div class="panel">
+  @if (hasError()) {
+    <app-empty-state
+      icon="cloud_off"
+      title="Impossible de charger le registre"
+      message="Vérifiez que l'API Quart est démarrée, puis réessayez."
+    >
+      <button mat-stroked-button (click)="load()">Réessayer</button>
+    </app-empty-state>
+  } @else {
+    <div class="table-wrap" [class.dimmed]="loading()">
+      <table mat-table [dataSource]="dataSource" matSort class="agents-table">
+        <ng-container matColumnDef="agent">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Agent</th>
+          <td mat-cell *matCellDef="let agent">
+            <div class="agent-cell">
+              <span class="avatar">{{ initials(agent) }}</span>
+              <div>
+                <div class="name">{{ agent.first_name }} {{ agent.last_name }}</div>
+                <div class="sub">{{ agent.email }}</div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef>Poste</th>
+          <td mat-cell *matCellDef="let agent">
+            <div class="name">{{ agent.grade }}</div>
+            <div class="sub">{{ agent.profession }}</div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="site">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Site</th>
+          <td mat-cell *matCellDef="let agent" class="site">{{ agent.site_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Statut</th>
+          <td mat-cell *matCellDef="let agent">
+            <span class="badge {{ statusClass(agent.status) }}">{{ statusLabel(agent.status) }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fatigue">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="right">Indice fatigue</th>
+          <td mat-cell *matCellDef="let agent" class="right">
+            <span class="badge {{ fatigueClass(agent.fatigue_index) }}">
+              <span class="num">{{ agent.fatigue_index | number: '1.0-0' }}</span>
+              {{ fatigueLevelLabel(agent.fatigue_index) }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      </table>
+    </div>
+
+    @if (!loading() && dataSource.data.length === 0) {
+      <app-empty-state
+        icon="person_search"
+        title="Aucun agent ne correspond aux filtres"
+        message="Élargissez la recherche ou réinitialisez les filtres."
+      />
+    }
+  }
+</div>

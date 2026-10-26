@@ -1,0 +1,17 @@
+# Back-end
+backend/.venv/
+backend/aumbiosync.db
+backend/aumbiosync.db-wal
+backend/aumbiosync.db-shm
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Front-end
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Divers
+.DS_Store
+Thumbs.db

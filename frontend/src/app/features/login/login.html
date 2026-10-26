@@ -1,0 +1,102 @@
+<div class="login-page">
+  <aside class="brand-panel">
+    <div class="brand">
+      <div class="logo"><mat-icon>monitor_heart</mat-icon></div>
+      <div class="brand-name">AUM-Biosync</div>
+    </div>
+
+    <div class="brand-content">
+      <h1>Le risque fatigue de vos équipes, suivi en continu</h1>
+      <p>
+        Applications &amp; data-science pour les équipes à horaires atypiques :
+        pompiers, soignants, industrie.
+      </p>
+
+      <ul class="products">
+        <li>
+          <div class="product-name">OPTeam</div>
+          <div class="product-detail">Planification des gardes et astreintes</div>
+        </li>
+        <li>
+          <div class="product-name">OpsReady</div>
+          <div class="product-detail">Préparation opérationnelle des secours</div>
+        </li>
+        <li>
+          <div class="product-name">Orbe</div>
+          <div class="product-detail">Capteur biométrique et télémétrie</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="note">Environnement de démonstration · données synthétiques</div>
+  </aside>
+
+  <main class="form-zone">
+    <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+      <h2>Connexion à la console</h2>
+      <p class="introduction">Utilisez votre compte professionnel AUM-Biosync.</p>
+
+      @if (error(); as currentError) {
+        <div class="error-banner" role="alert">
+          <mat-icon>error_outline</mat-icon>
+          {{ currentError }}
+        </div>
+      }
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email professionnel</mat-label>
+        <mat-icon matTextPrefix>mail</mat-icon>
+        <input matInput type="email" formControlName="email" autocomplete="username" />
+        @if (form.controls.email.hasError('required')) {
+          <mat-error>L'adresse email est requise</mat-error>
+        } @else if (form.controls.email.hasError('email')) {
+          <mat-error>Le format de l'adresse est invalide</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Mot de passe</mat-label>
+        <mat-icon matTextPrefix>lock</mat-icon>
+        <input
+          matInput
+          [type]="showPassword() ? 'text' : 'password'"
+          formControlName="password"
+          autocomplete="current-password"
+        />
+        <button
+          mat-icon-button
+          matTextSuffix
+          type="button"
+          (click)="showPassword.set(!showPassword())"
+          [attr.aria-label]="showPassword() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+        >
+          <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (form.controls.password.hasError('required')) {
+          <mat-error>Le mot de passe est requis</mat-error>
+        }
+      </mat-form-field>
+
+      <button class="submit-button" mat-flat-button type="submit" [disabled]="loading()">
+        @if (loading()) {
+          <mat-progress-spinner diameter="18" mode="indeterminate" />
+        } @else {
+          Se connecter
+        }
+      </button>
+
+      <div class="demo-accounts">
+        <div class="demo-hint">
+          Comptes de démonstration, mot de passe <span class="num">{{ demoPassword }}</span>
+        </div>
+        <div class="demo-grid">
+          @for (account of demoAccounts; track account.email) {
+            <button mat-stroked-button type="button" (click)="prefill(account.email)">
+              {{ account.label }}
+            </button>
+          }
+        </div>
+      </div>
+    </form>
+  </main>
+</div>
