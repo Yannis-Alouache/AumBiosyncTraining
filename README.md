@@ -14,7 +14,8 @@ coche dans ce README (section [Suivi des tâches](#suivi-des-tâches)).
 
 📖 **Guide visuel des tickets** : [docs/guide-tickets.html](docs/guide-tickets.html)
 illustre chaque ticket avec son cas d'usage (qui s'en sert et pourquoi) et une
-maquette du rendu attendu. Un seul fichier autonome, à ouvrir dans un navigateur.
+maquette du rendu attendu. Un seul fichier autonome, à ouvrir dans un navigateur —
+ou consultable en ligne : <https://yannis-alouache.github.io/AumBiosyncTraining/>.
 
 ## Stack
 
